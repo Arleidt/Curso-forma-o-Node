@@ -7,6 +7,21 @@ const express = require('express');//importando express
 */
 const app = express();
 /**
+ * criando rota
+ * primeira rota inicial get
+ * function o que essa rota faz.
+ * toda rota criada temos que devolver uma resposta 
+ * ".send(enviar)"
+ */
+app.get('/', function (requisicao, resposta){
+    resposta.send("Bem vindo ao Primeiro Servidor Node.js");
+});
+
+app.get('/blog', function (req, resp){
+    resp.send("Bem vindo ao meu Blog!")
+});
+
+/**
  * metodo listen 
  * com função que é chamada sempre que o servidor é iniciado
  * com parametro error, se ocorrer um erro imprime mensagem
