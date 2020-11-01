@@ -1,0 +1,25 @@
+{
+  "name": "curso-formacao-node",
+  "version": "1.0.0",
+  "description": "curso-formacao-node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arleidt/Curso-forma-o-Node.git"
+  },
+  "author": "arlei duarte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arleidt/Curso-forma-o-Node/issues"
+  },
+  "homepage": "https://github.com/Arleidt/Curso-forma-o-Node#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
