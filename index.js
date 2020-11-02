@@ -53,6 +53,19 @@ app.get('/canais/:videos?', function (req, resp){
     }
 });
 /**
+ * query params
+ * forma dinamica não coladas na rota
+ * nao definidas na rota videos/youtube?canal=guiaprogramador
+ */
+app.get('/canal/youtube', function (req, resp){
+    var canal = req.query["canal"];
+    if(canal){
+        resp.send(canal); 
+    }else{
+        resp.send("Nenhum Canal Fornecido!");     
+    };
+});
+/**
  * metodo listen 
  * com função que é chamada sempre que o servidor é iniciado
  * com parametro error, se ocorrer um erro imprime mensagem
