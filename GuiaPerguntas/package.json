@@ -1,0 +1,29 @@
+{
+  "name": "guiaperguntas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "arlei duarte",
+  "license": "ISC",
+  "description": "plataforma de perguntas e respostas ",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arleidt/Curso-formacao-Node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arleidt/Curso-formacao-Node/issues"
+  },
+  "homepage": "https://github.com/Arleidt/Curso-formacao-Node#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.1.3"
+  }
+}
