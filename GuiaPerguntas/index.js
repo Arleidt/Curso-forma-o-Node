@@ -8,8 +8,15 @@ const app = express(); //recebe express na var app
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res){//criando rota com resposta
-  res.render("index.ejs")//vai desenhar arquivo index.ejs render olha automaticamente na pasta views
-})
+  var nome = "Arlei";
+  var lang = "JavaScript";
+  res.render("index.ejs", {
+    nome = nome,//Passando valores para html
+    lang = lang,
+    idade = 31,
+    empresa = "Compasso UOL"
+  })//vai desenhar arquivo index.ejs render olha automaticamente na pasta views
+});
 
 app.listen(5000, function(error){//rodar aplicação
   if(error){
