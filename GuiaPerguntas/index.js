@@ -11,10 +11,10 @@ app.get("/", function(req, res){//criando rota com resposta
   var nome = "Arlei";
   var lang = "JavaScript";
   res.render("index.ejs", {
-    nome = nome,//Passando valores para html
-    lang = lang,
-    idade = 31,
-    empresa = "Compasso UOL"
+    nome : nome,//Passando valores para html
+    lang : lang,
+    idade : 31,
+    empresa : "Compasso UOL"
   })//vai desenhar arquivo index.ejs render olha automaticamente na pasta views
 });
 
