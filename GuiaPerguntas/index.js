@@ -7,8 +7,8 @@ const app = express(); //recebe express na var app
  */
 app.set("view engine", "ejs");
 
-app.get("/", function(req, res){//criando rota com resposta
-  var nome = "Arlei";
+app.get("/:nome", function(req, res){//criando rota com resposta
+  var nome = req.params["nome"];
   var lang = "JavaScript";
   res.render("index.ejs", {
     nome : nome,//Passando valores para html
