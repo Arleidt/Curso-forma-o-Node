@@ -46,7 +46,7 @@ app.get('/user/:nome/:sobrenome', function (req, resp){
 app.get('/canais/:videos?', function (req, resp){
     var canais = req.params.videos
     if(canais){
-        resp.send("<h1>Bem vindo ao videos "+canais+" </h1>");
+        resp.send("<h1>Bem vindo ao "+canais+" </h1>");
 
     }else{
         resp.send("<h1>Bem vindo aos meus canais!</h1>")
