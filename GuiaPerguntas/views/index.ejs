@@ -16,5 +16,16 @@
       <%= idade %>
       <%= empresa %>
 
+      <%if(msg){%>
+        <h3>Isso é uma mensagem de erro!</h3>
+      <%}else {%>
+        <h3>Nenhum Erro</h3>
+      <%}%>
+
+      <% produtos.forEach(function(produto)  { %>
+        <hr>
+        <h3><%= produto.nome %></h3>
+        <h4><%= produto.preco %></h4>
+      <%}) %>
   </body>
 </html>
