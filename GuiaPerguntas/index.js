@@ -6,6 +6,13 @@ const app = express(); //recebe express na var app
  * que permite gerar marcação HTML com JavaScript simples.
  */
 app.set("view engine", "ejs");
+/**
+ * arquivos estaticos, não são processados no backend
+ * css - js do frontend - img - arq de dados etc
+ * Passando para o express(usar) arquivos estáticos, com nome da pasta onde vai
+ * ficar os arquivos estáticos. Padrão mercado o 'public'.
+ */
+app.use(express.static('public'));
 
 app.get("/:nome/:lang", function(req, res){//criando rota com resposta
   var nome = req.params["nome"];
