@@ -15,11 +15,13 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 
 app.get("/", function(req, res){//criando rota com resposta
+  res.render("index");
+});
 
+app.get("/perguntar", (req, res) => {
+  res.render("perguntar");
+})
 
-  res.render("index.ejs");
-
-}); 
 app.listen(5000, function(error){//rodar aplicação
   if(error){
     console.log("Erro ao Iniciar o Servidor!")
