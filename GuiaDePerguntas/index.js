@@ -66,6 +66,13 @@ app.post("/salvarpergunta", function (req, res) {
   res.send("Formulário Recebido! Título: " + titulo + " Descricao: " + descricao);
 });
 
+app.get("/pergunta/:id", (req, res) => {
+  var id = req.params.id;
+  Pergunta.findOne({//busca um dado
+     where: {id: id} //obj json dentro de outro json {nomecampopesquisar : valorcomparar} where p/fazer busca atraves de condicoes
+  });
+})
+
 app.listen(5000, function (error) {//rodar aplicação
   if (error) {
     console.log("Erro ao Iniciar o Servidor!")
