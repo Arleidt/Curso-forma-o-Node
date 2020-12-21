@@ -2,7 +2,7 @@ const express = require("express"); //import modulo
 const app = express(); //recebe express na var app
 const bodyParser = require("body-parser");// import bodyParser, biblioteca pegar dados formulario
 const connection = require("./database/database");
-const Pergunta = require("./database/Pergunta");
+const Pergunta = require("./database/Pergunta");//Import model pergunta
 //database com promisse se sucesso executa o then. Se acontecer erro é o catch
 connection
   .authenticate()
@@ -36,7 +36,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()); //Permite ler dados de formulários enviados via json
 //Rotas
 app.get("/", function (req, res) {//criando rota com resposta
-  res.render("index");
+  /**metodo busca todas as perguntas da tabela. .then recebe lista perguntas e 
+   * quando estiver pronta manda para dentro do then (raw true faz um pesquisa 
+   * crua pelos dados. Só os dados e nada mais)*/
+  Pergunta.findAll({raw: true, order:[ //atributo order que recebe um array
+    ['id', 'DESC'],// ordem de ordenaçao outro array que ordena por id e decrescente
+  ]}).then(perguntas => {
+    res.render("index", { //abrindo json e passando perguntas
+      perguntas: perguntas
+    });
+    console.log(perguntas);
+  })
 });
 
 app.get("/perguntar", (req, res) => {
@@ -46,7 +56,14 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", function (req, res) {
   var titulo = req.body.titulo;
   var descricao = req.body.descricao;
-  res.send("Formulário Recebido! título " + titulo + " descricao " + descricao);
+  Pergunta.create({//create metodo responsavel salvar BD dentro da tabela - (import model- e model met create)
+    titulo: titulo,
+    descricao: descricao
+  }).then(() => {//fazer alguma coisa após pergunta ser criada salva no bd
+    res.redirect("/");
+  })
+
+  res.send("Formulário Recebido! Título: " + titulo + " Descricao: " + descricao);
 });
 
 app.listen(5000, function (error) {//rodar aplicação
