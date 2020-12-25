@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()); //Permite ler dados de formulários enviados via json
 //Rotas
 app.get("/", function (req, res) {//criando rota com resposta
-  /**metodo busca todas as perguntas da tabela. .then recebe lista perguntas e 
+  /**metodo findAll busca todas as perguntas da tabela. .then recebe lista perguntas e 
    * quando estiver pronta manda para dentro do then (raw true faz um pesquisa 
    * crua pelos dados. Só os dados e nada mais)*/
   Pergunta.findAll({raw: true, order:[ //atributo order que recebe um array
@@ -67,10 +67,17 @@ app.post("/salvarpergunta", function (req, res) {
 });
 
 app.get("/pergunta/:id", (req, res) => {
-  var id = req.params.id;
-  Pergunta.findOne({//busca um dado
+  var id = req.params.id;//pega id digitado na rota
+  Pergunta.findOne({//Chamando o model Pergunta//met sequelize busca um dado findOne(CONSULTA CONDIÇAO);
      where: {id: id} //obj json dentro de outro json {nomecampopesquisar : valorcomparar} where p/fazer busca atraves de condicoes
-  });
+  }).then(pergunta => {//then funcao rodada apos pesquisa, pergunt.find manda model pesquisar no banco por id se achar chama o then e passar pergunta pra ele
+     if(pergunta != undefined){//caso n achar pergunta ele vai chamar then da mesma forma e vai vir var nula. Verificação if.
+      //pergunta achada 
+      res.render("pergunta");//exibir pagina pergunta.ejs
+     }else{ // Não encontrada
+      res.redirect('/'); //Não encontrada redireciona pagina principal.
+     }
+  })
 })
 
 app.listen(5000, function (error) {//rodar aplicação
