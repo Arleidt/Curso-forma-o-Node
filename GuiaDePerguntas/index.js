@@ -3,6 +3,7 @@ const app = express(); //recebe express na var app
 const bodyParser = require("body-parser");// import bodyParser, biblioteca pegar dados formulario
 const connection = require("./database/database");
 const Pergunta = require("./database/Pergunta");//Import model pergunta
+const Resposta = require("./database/Resposta");
 //database com promisse se sucesso executa o then. Se acontecer erro é o catch
 connection
   .authenticate()
@@ -39,9 +40,11 @@ app.get("/", function (req, res) {//criando rota com resposta
   /**metodo findAll busca todas as perguntas da tabela. .then recebe lista perguntas e 
    * quando estiver pronta manda para dentro do then (raw true faz um pesquisa 
    * crua pelos dados. Só os dados e nada mais)*/
-  Pergunta.findAll({raw: true, order:[ //atributo order que recebe um array
-    ['id', 'DESC'],// ordem de ordenaçao outro array que ordena por id e decrescente
-  ]}).then(perguntas => {
+  Pergunta.findAll({
+    raw: true, order: [ //atributo order que recebe um array
+      ['id', 'DESC'],// ordem de ordenaçao outro array que ordena por id e decrescente
+    ]
+  }).then(perguntas => {
     res.render("index", { //abrindo json e passando perguntas
       perguntas: perguntas
     });
@@ -69,16 +72,35 @@ app.post("/salvarpergunta", function (req, res) {
 app.get("/pergunta/:id", (req, res) => {
   var id = req.params.id;//pega id digitado na rota
   Pergunta.findOne({//Chamando o model Pergunta//met sequelize busca um dado findOne(CONSULTA CONDIÇAO);
-     where: {id: id} //obj json dentro de outro json {nomecampopesquisar : valorcomparar} where p/fazer busca atraves de condicoes
+    where: { id: id } //obj json dentro de outro json {nomecampopesquisar : valorcomparar} where p/fazer busca atraves de condicoes
   }).then(pergunta => {//then funcao rodada apos pesquisa, pergunt.find manda model pesquisar no banco por id se achar chama o then e passar pergunta pra ele
-     if(pergunta != undefined){//caso n achar pergunta ele vai chamar then da mesma forma e vai vir var nula. Verificação if.
-      //pergunta achada 
-      res.render("pergunta");//exibir pagina pergunta.ejs
-     }else{ // Não encontrada
+    if (pergunta != undefined) {//caso n achar pergunta ele vai chamar then da mesma forma e vai vir var nula. Verificação if.
+        Resposta.findAll({
+          where: {perguntaId: pergunta.id},
+          order:[ ['id', 'DESC']]
+        }).then (respostas => {
+          //pergunta achada 
+          res.render("pergunta", {
+            pergunta: pergunta, //passando a var pergunta para pergunta no render para a view pergunta.ejs
+            respostas : respostas //passando para view
+          });//exibir pagina pergunta.ejs
+        });
+    } else { // Não encontrada
       res.redirect('/'); //Não encontrada redireciona pagina principal.
-     }
+    }
   })
-})
+});
+
+app.post('/responder', (req, res) => {
+  var corpo = req.body.corpo;
+  var perguntaId = req.body.pergunta;
+  Resposta.create({ //dois campos correspondem aos criados em resposta.js
+    corpo: corpo,
+    perguntaId: perguntaId
+  }).then(() => {
+    res.redirect("/pergunta/"+perguntaId);//redireciona para pergunta mais o id da pergunta da resposta
+  });
+});
 
 app.listen(5000, function (error) {//rodar aplicação
   if (error) {
